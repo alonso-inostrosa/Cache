@@ -29,16 +29,23 @@ private:
 
 public:
 
-    void insert( ){
-
+    void insert( std::shared_ptr<CacheItem> ci ){
+        pq.push( ci );
+        contents[ ci->key ] = ci;
     }
 
     void remove(){
     
     }
 
-    template<typename T> void print_queue(T q) {
+    void print_queue() {
+        std::priority_queue<std::shared_ptr<CacheItem>, std::vector<std::shared_ptr<CacheItem>>, LessThanComparator> pq_temp = pq;
 
+        while( !pq_temp.empty() ){
+            std::shared_ptr<CacheItem> ci = pq_temp.top( );
+            std::cout << "Key: " << ci->key << " - Priority: " << ci->priority << std::endl;
+            pq_temp.pop( );
+        }
     }
 
 };
