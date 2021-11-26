@@ -12,6 +12,30 @@ public:
         this->priority = priority;
         this->key = key;
     }
+
+    friend bool operator<(CacheItem& a, CacheItem& b)  {
+        return a.priority > b.priority;
+    }
+
+    friend bool operator>(CacheItem& a, CacheItem& b)  {
+        return a.priority > b.priority;
+    }
+
+    friend bool operator==(CacheItem& a, CacheItem& b)  {
+        return a.priority == b.priority;
+    }
+
+    friend bool operator!=(CacheItem& a, CacheItem& b)  {
+        return a.priority != b.priority;
+    }
+
+    friend bool operator<=(CacheItem& a, CacheItem& b)  {
+        return a.priority <= b.priority;
+    }
+
+    friend bool operator>=(CacheItem& a, CacheItem& b)  {
+        return a.priority >= b.priority;
+    }
 };
 
 #endif //CACHE_ITEMS_H
