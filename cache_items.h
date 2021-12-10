@@ -13,14 +13,19 @@ public:
         this->key = key;
     }
 
-    friend std::ostream& operator << (std::ostream& os, const CacheItem& ci)
-    {
+    std::size_t operator()(CacheItem const& ci) {
+            std::size_t h1 = std::hash<int>{}(ci.priority);
+            std::size_t h2 = std::hash<std::string>{}(ci.key);
+            return h1 ^ (h2 << 1); 
+    }
+
+    friend std::ostream& operator << (std::ostream& os, const CacheItem& ci) {
         os << std::to_string(ci.priority) << "|" << ci.key;
         return os;
     }
 
     friend bool operator<(CacheItem& a, CacheItem& b)  {
-        return a.priority > b.priority;
+        return a.priority < b.priority;
     }
 
     friend bool operator>(CacheItem& a, CacheItem& b)  {
@@ -43,5 +48,17 @@ public:
         return a.priority >= b.priority;
     }
 };
+
+//Para usar Hash sobre objetos CacheItem (inserta la función en espacio std)
+namespace std{
+    template<> struct hash<CacheItem>{
+        std::size_t operator()(CacheItem const& ci) const noexcept
+        {
+            std::size_t h1 = std::hash<int>{}(ci.priority);
+            std::size_t h2 = std::hash<std::string>{}(ci.key);
+            return h1 ^ (h2 << 1); 
+        }
+    };
+}
 
 #endif //CACHE_ITEMS_H
