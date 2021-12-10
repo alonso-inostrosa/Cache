@@ -1,7 +1,7 @@
 #ifndef CACHE_ITEMS_H
 #define CACHE_ITEMS_H
 
-#include<string>
+#include<iostream>
 
 class CacheItem{
 public:
@@ -11,6 +11,12 @@ public:
     CacheItem( int priority, std::string key ){
         this->priority = priority;
         this->key = key;
+    }
+
+    friend std::ostream& operator << (std::ostream& os, const CacheItem& ci)
+    {
+        os << std::to_string(ci.priority) << "|" << ci.key;
+        return os;
     }
 
     friend bool operator<(CacheItem& a, CacheItem& b)  {
