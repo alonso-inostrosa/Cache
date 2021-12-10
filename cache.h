@@ -14,10 +14,10 @@
 class Cache {
 private:
     //Comparador, para la cola de prioridad
-    class LessThanComparator : public std::binary_function< std::shared_ptr<CacheItem>, std::shared_ptr<CacheItem>,bool>{
+    class GreatThanComparator : public std::binary_function< std::shared_ptr<CacheItem>, std::shared_ptr<CacheItem>,bool>{
     public:
       bool operator()(std::shared_ptr<CacheItem> ci1, std::shared_ptr<CacheItem> ci2) const {
-        return ci1 < ci2;
+        return ci1 > ci2;
       }
   };
 
@@ -30,12 +30,16 @@ private:
 public:
 
     void insert( std::shared_ptr<CacheItem> ci ){
-        pq.push( ci );
 
         std::hash<CacheItem> hs;
         size_t key = hs( *ci );
-        std::cout << "Inserting key=" << key << " elem=" << *ci << std::endl;
-        contents[ key ] = ci;
+        if(contents.count( key ) == 0){ //Si elemento no existe en la PQ, se agrega a la PQ y al MAP
+            std::cout << "Inserting key=" << key << " elem=" << *ci << std::endl;
+            contents[ key ] = ci;
+            pq.push( ci );
+
+        }else
+            std::cout << "NOT Inserting key=" << key << " elem=" << *ci << std::endl;
     }
 
     void remove(){
@@ -49,12 +53,12 @@ public:
     }
 
     void print_queue() {
-        //std::priority_queue<std::shared_ptr<CacheItem>, std::vector<std::shared_ptr<CacheItem>>> pq_temp = pq;
+        std::priority_queue<std::shared_ptr<CacheItem>, std::vector<std::shared_ptr<CacheItem>>> pq_temp = pq;
 
         while( !pq.empty() ){
-            std::shared_ptr<CacheItem> ci = pq.top( );
+            std::shared_ptr<CacheItem> ci = pq_temp.top( );
             std::cout << *ci << std::endl;
-            pq.pop( );
+            pq_temp.pop( );
         }
     }
 
