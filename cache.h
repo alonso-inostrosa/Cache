@@ -55,11 +55,15 @@ public:
     void print_queue() {
         std::priority_queue<std::shared_ptr<CacheItem>, std::vector<std::shared_ptr<CacheItem>>> pq_temp = pq;
 
-        while( !pq.empty() ){
+        while( !pq_temp.empty() ){
             std::shared_ptr<CacheItem> ci = pq_temp.top( );
             std::cout << *ci << std::endl;
             pq_temp.pop( );
         }
+    }
+
+    ~Cache(){
+        contents.clear();
     }
 
 };

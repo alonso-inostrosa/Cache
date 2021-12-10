@@ -49,7 +49,7 @@ public:
     }
 };
 
-//Para usar Hash sobre objetos CacheItem (inserta la función en espacio std)
+//Para usar Hash sobre objetos CacheItem (inserta la función en el namespace std)
 namespace std{
     template<> struct hash<CacheItem>{
         std::size_t operator()(CacheItem const& ci) const noexcept
