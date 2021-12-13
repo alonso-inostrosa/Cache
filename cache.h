@@ -19,7 +19,7 @@ private:
       bool operator()(std::shared_ptr<CacheItem> ci1, std::shared_ptr<CacheItem> ci2) const {
         return ci1 > ci2;
       }
-  };
+    };
 
     //Cola de Prioridad, para determinar (en base a politica LFR o LFU) elementos a desalojar
     std::priority_queue<std::shared_ptr<CacheItem>, std::vector<std::shared_ptr<CacheItem>>> pq;
@@ -30,9 +30,9 @@ private:
 public:
 
     void insert( std::shared_ptr<CacheItem> ci ){
-
         std::hash<CacheItem> hs;
         size_t key = hs( *ci );
+        //size_t key = (*ci)( *ci );
         if(contents.count( key ) == 0){ //Si elemento no existe en la PQ, se agrega a la PQ y al MAP
             std::cout << "Inserting key=" << key << " elem=" << *ci << std::endl;
             contents[ key ] = ci;
